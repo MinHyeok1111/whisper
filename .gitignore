@@ -1,0 +1,33 @@
+# macOS
+.DS_Store
+
+# Python
+__pycache__/
+*.py[cod]
+
+# 가상환경
+.venv/
+venv/
+env/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# 비밀정보
+.env
+.env.*
+
+# 데이터셋
+data/
+**/data/
+
+# 모델과 checkpoint
+*.pt
+*.pth
+*.ckpt
+checkpoints/
+
+# 캐시
+.cache/
+
+whisper1/
