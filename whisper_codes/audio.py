@@ -49,8 +49,8 @@ def load_audio(file: str, sr: int = SAMPLE_RATE):
         "-i", file,
         "-f", "s16le",
         "-ac", "1",
-        "-acodec", "pcm_s16le",
-        "-ar", str(sr),
+        "-acodec", "pcm_s16le", ## signed 16bit pcm
+        "-ar", str(sr), ## 16khz
         "-"
     ]
     # fmt: on
@@ -62,7 +62,7 @@ def load_audio(file: str, sr: int = SAMPLE_RATE):
     return np.frombuffer(out, np.int16).flatten().astype(np.float32) / 32768.0
 
 
-def pad_or_trim(array, length: int = N_SAMPLES, *, axis: int = -1):
+def pad_or_trim(array, length: int = N_SAMPLES, *, axis: int = -1):#
     """
     Pad or trim the audio array to N_SAMPLES, as expected by the encoder.
     """
@@ -149,7 +149,7 @@ def log_mel_spectrogram(
     magnitudes = stft[..., :-1].abs() ** 2
 
     filters = mel_filters(audio.device, n_mels)
-    mel_spec = filters @ magnitudes
+    mel_spec = filters @ magnitudes ## [80 X 201] @ [201 X 3000] ==> [80, 3000]
 
     log_spec = torch.clamp(mel_spec, min=1e-10).log10()
     log_spec = torch.maximum(log_spec, log_spec.max() - 8.0)
